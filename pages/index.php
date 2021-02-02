@@ -96,8 +96,10 @@
                 <ul class="list">
                     <li class="header">Menu Utama  </li>
                     <br>
+                    <div align="center">
                     <button type="button" id="logout" class="btn btn-lg btn-danger"> Logout </button>
-                    <!-- <a href="../include/kontrol/login.php?type=logout" id="logout"> Logout </a> -->
+                    </div>
+                     
                     <li a href="javascript::void(0);"></li>
                     <?php
                         if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
@@ -154,33 +156,50 @@
                          if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
                             echo '
                             <li>
-                                <a href="index.php?navigasi=jabatan_pegawai&crud=view"><i class="fa fa-table fa-fw"></i> Jabatan Pegawai</a>
-                            </li>
-                            ';
+                            <a href="index.php?navigasi=jabatan_pegawai&crud=view">
+                                <i class="material-icons">home</i>
+                                <span> Jabatan Pegawai</span>
+                            </a>
+                           </li>';  
 
                         }
                          if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
                             echo '
                             <li>
-                                <a href="index.php?navigasi=bobot_penilaian&crud=view"><i class="fa fa-table fa-fw"></i> Bobot</a>
-                            </li>
-                            ';
-
+                            <a href="index.php?navigasi=bobot_penilaian&crud=view">
+                                <i class="material-icons">home</i>
+                                <span> Bobot Penilaian</span>
+                            </a>
+                           </li>';  
+                          
                         }
                          if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
                             echo '
                             <li>
-                                <a href="index.php?navigasi=penilaian&crud=view"><i class="fa fa-table fa-fw"></i> Penilaian</a>
-                            </li>
-                            ';
-
+                            <a href="index.php?navigasi=penilaian&crud=view">
+                                <i class="material-icons">home</i>
+                                <span> Penilaian</span>
+                            </a>
+                           </li>';  
                         }
                          if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
                             echo '
                             <li>
-                                <a href="index.php?navigasi=usulan_pegawai_terbaik&crud=view"><i class="fa fa-table fa-fw"></i>  Usulan Pegawai Terbaik</a>
-                            </li>
-                            ';
+                            <a href="index.php?navigasi=usulan_pegawai_terbaik&crud=view">
+                                <i class="material-icons">home</i>
+                                <span> Usulan Pegawai Terbaik </span>
+                            </a>
+                           </li>';   
+                        }
+                        if($hak_akses==0 || $hak_akses==2){
+                            
+                            echo '
+                                    <li>
+                                    <a href="index.php?navigasi=user&crud=view">
+                                        <i class="material-icons">home</i>
+                                        <span> User </span>
+                                    </a>
+                                   </li>';   
 
                         }
                          if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
@@ -189,14 +208,22 @@
                                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Laporan Penilaian<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">';
                                 if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
-                                   echo ' <li>
-                                        <a href="index.php?navigasi=laporan_penilaian_pegawai&crud=view">Penilain Pegawai</a>
-                                    </li>';
+                                    echo '
+                                    <li>
+                                    <a href="index.php?navigasi=laporan_penilaian_pegawai&crud=view">
+                                        <i class="material-icons">home</i>
+                                        <span> Penilaian Pegawai </span>
+                                    </a>
+                                   </li>';   
                                 }
                                 if ($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
-                                    echo '<li>
-                                        <a href="index.php?navigasi=history_usulan_pegawai_terbaik&crud=view">History Usulan Pegawai Terbaik</a>
-                                    </li>';
+                                    echo '
+                                    <li>
+                                    <a href="index.php?navigasi=history_usulan_pegawai_terbaik&crud=view">
+                                        <i class="material-icons">home</i>
+                                        <span> History Usulan Pegawai Terbaik </span>
+                                    </a>
+                                   </li>';   
                                 }
                             echo '    </ul>
                                 <!-- /.nav-second-level -->
@@ -204,14 +231,7 @@
                             ';
 
                         }
-                         if($hak_akses==0 || $hak_akses==2){
-                            echo ' 
-                            <li>
-                            <a href="index.php?navigasi=user&crud=view"><i class="fa fa-table fa-fw"></i> User</a>
-                            </li>
-                            ';
-
-                        }
+                        
                     ?> 
                 </ul>
             </div>
