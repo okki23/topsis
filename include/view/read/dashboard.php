@@ -8,9 +8,7 @@
 	die("Gagal Query Data User ");}
 	$data=mysqli_fetch_array($hasil);
 ?>
-<div class="col-sm-9 col-sm-offset-3">  
-<h1 class="text-center">
-<br /><br />
+ 
 
 <b>SELAMAT DATANG</b><br /><br />
 <span style='color:blue'>
@@ -26,7 +24,6 @@ if ($data['hak_akses']=='4') {echo 'Karyawan';}
 </span>
 
  <br /> <br />
-<b>DI APLIKASI PEMILIHAN PEGAWAI TERBAIK <br />
-PAMELLA SUPERMARKET YOGYAKARTA</b>
+<b> Sistem Aplikasi Penilaian Kinerja Dengan Metode TOPSIS </b>
 </h1>
-</div>
+ 

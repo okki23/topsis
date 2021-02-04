@@ -1,11 +1,20 @@
 
 
-<div class="col-sm-8 col-sm-offset-3">  
-	<h2 class="text-center">DAFTAR BAGIAN</h2> 
-	<div class="panel-group">
-		<div class="panel panel-default">
-			<table class="table table-bordered table-hover text-center panel panel-primary">
-				<thead class="panel-heading">
+ 
+ 	<?php
+		if($hak_akses==0 || $hak_akses==2 ){
+		 
+		echo '	<button type="button" id="tambah" class="btn btn-success">TAMBAH BAGIAN</button>';
+		}
+	?>
+	
+ 	<button class="btn btn-primary" onclick="printJS('../pdf/print_bagian.php')">  
+		<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+	<br>
+	&nbsp;
+ 
+		<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+				<thead>
 					<tr>
 						<th class="text-center">ID Bagian</th>
 						<th class="text-center">Nama Bagian</th>
@@ -35,33 +44,15 @@
 					?>
 				</tbody>
 			</table>
-						<hr style="height:2px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-heading">
-					<div class="row">
-						<div class="col-sm-12">
-						<?php
-							 if($hak_akses==0 || $hak_akses==2 ){
-						echo '	<button type="button" id="tambah" class="btn btn-success">TAMBAH BAGIAN</button>';
-							 }
-						?>
-						<button class="btn btn-primary hidden-print" onclick="printJS('../pdf/print_bagian.php')">
-						<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+			 
 
-							
-						</div>
-					</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<script src="../vendor/jquery/jquery.min.js"></script>
-
-
+<script src="../assets/plugins/jquery/jquery.min.js"></script>
 <script>
+
 	 $(document).ready(function () {
+		$('.js-basic-example').DataTable({
+			responsive: true
+		});
         $("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=bagian&crud=tambah");
           });

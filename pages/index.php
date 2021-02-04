@@ -34,6 +34,8 @@
 
     <!-- Custom Css -->
     <link href="../assets/css/style.css" rel="stylesheet">
+    <!-- JQuery DataTable Css -->
+    <link href="../assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="../assets/css/themes/all-themes.css" rel="stylesheet" />
@@ -397,14 +399,20 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Dashboard
+                                <?php 
+                                    echo "<p style='text-align:center;text-transform:uppercase;font-weight:bold;'>".$_GET['navigasi']."<p>";
+                                ?>
                             </h2>
                            
                         </div>
-                        <div class="body">
-                            <p class="lead">
-                                Selamat Datang 
-                            </p>
+                        <div class="body"> 
+                        <?php
+                			
+                            include_once "../include/navigasi/navigasi.php";
+                                        
+                        ?>
+                        </div>
+                            
                           
                         </div>
                     </div>
@@ -439,15 +447,19 @@
     <!-- ChartJs -->
     <script src="../assets/plugins/chartjs/Chart.bundle.js"></script>
 
+    <script src="../assets/plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../assets/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../assets/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../assets/js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Sparkline Chart Plugin Js -->
+    <script src="../assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
     <!-- Flot Charts Plugin Js -->
     <script src="../assets/plugins/flot-charts/jquery.flot.js"></script>
     <script src="../assets/plugins/flot-charts/jquery.flot.resize.js"></script>
     <script src="../assets/plugins/flot-charts/jquery.flot.pie.js"></script>
     <script src="../assets/plugins/flot-charts/jquery.flot.categories.js"></script>
     <script src="../assets/plugins/flot-charts/jquery.flot.time.js"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="../assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
     <!-- Custom Js -->
     <script src="../assets/js/admin.js"></script>
@@ -479,23 +491,5 @@
                         }
                     })
     });
-        // $(document).ready(function () {
-        //     $("#logout").click(function () {
-        //             $.ajax({
-        //                 type: "POST",
-        //                 url: "../include/kontrol/login.php",
-        //                 data: "type=logout",
-        //                 success: function (respons) {
-        //                     console.log(respons);
-        //                     if (respons == 'true') {
-                            
-        //                         window.location = "login.php";
-        //                     }
-        //                     else {
-        //                         $("#konfirmasi_login").html(respons);
-        //                     }
-        //                 }
-        //             })
-        //         });
-        // });
+       
     </script>

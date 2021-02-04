@@ -1,4 +1,5 @@
 <?php
+ 
 if(isset($_GET['navigasi'])){
       if($_GET['navigasi']=='dashboard'){
         include_once "../include/view/read/dashboard.php";

@@ -9,6 +9,7 @@ if(isset($_POST['id_bagian']) || isset ($_POST['bagian']) ){
         if($_POST['crud']=='update'){
             $id_bagian=$_POST['id_bagian'];
             $bagian=$_POST['bagian'];
+              
             $proses="UPDATE bagian SET bagian='$bagian' WHERE id_bagian='$id_bagian'";
             $hasil = mysqli_query($db_link,$proses);
             if($hasil){
