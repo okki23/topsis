@@ -55,19 +55,13 @@
               url: "../include/kontrol/kontrol_bagian.php",
               data: 'crud=tambah&id_bagian=' + id_bagian + '&bagian=' + bagian,
               success: function (respons) {
-                  if (respons=='berhasil'){
-                        $('#pesan_berhasil').text("Bagian Berhasil Ditambah");
-                        $("#hasil").show();
-                        setTimeout(function(){
-                            $("#hasil").hide(); 
-                        }, 2000);
+                if (respons = 1){
+                    alert('Berhasil Ditambahkan!');
+	                    window.location='index.php?navigasi=bagian&crud=view';
                   }
                   else {
-                        $('#pesan_gagal').text("Bagian Gagal Ditambah");
-                        $("#gagal").show();
-                        setTimeout(function(){
-                            $("#gagal").hide(); 
-                        }, 2000);
+                    alert('Gagal!');
+	                    window.location='index.php?navigasi=bagian&crud=view';
 
                   }
                   

@@ -69,24 +69,15 @@
 					success: function (respons) {
 						
 						console.log(respons);
-						if (respons=='berhasil'){
-							$('#pesan_berhasil').text("Bagian Berhasil Dihapus");
-								$("#hasil").show();
-								setTimeout(function(){
-									$("#hasil").hide();
-									window.location.reload(1);
-								}, 2000);
-						}
+						if (respons = 1){
+                    alert('Data Terhapus!');
+	                    window.location='index.php?navigasi=bagian&crud=view';
+                  }
+                  else {
+                    alert('Gagal!');
+	                    window.location='index.php?navigasi=bagian&crud=view';
 
-						else {
-								$('#pesan_gagal').text("Bagian Gagal Dihapus");
-								$("#gagal").show();
-								setTimeout(function(){
-									$("#gagal").hide(); 
-									window.location.reload(1);
-								}, 2000);
-							
-						}
+                  }
 					}
 					});
 			 }

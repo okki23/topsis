@@ -12,12 +12,13 @@ if(isset($_POST['id_bagian']) || isset ($_POST['bagian']) ){
               
             $proses="UPDATE bagian SET bagian='$bagian' WHERE id_bagian='$id_bagian'";
             $hasil = mysqli_query($db_link,$proses);
-            if($hasil){
-                echo "berhasil";
-            }
-            else{
-                echo "gagal";
-                echo mysqli_error();
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
             }
         }
 
@@ -29,11 +30,12 @@ if(isset($_POST['id_bagian']) || isset ($_POST['bagian']) ){
             $hasil = mysqli_query($db_link,$sql); 
             
             if ($hasil) {
-                echo "berhasil";
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
             } 
             else {
-                echo "gagal";
-                echo mysqli_error();
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
             }
         }
 
@@ -41,12 +43,13 @@ if(isset($_POST['id_bagian']) || isset ($_POST['bagian']) ){
            $id_bagian = $_POST['id_bagian'];
             $sql = "DELETE from bagian where id_bagian='$id_bagian'";
             $hasil = mysqli_query($db_link,$sql);
-            if($hasil){
-                 echo "berhasil";
-            }
-            else{
-             echo "gagal";
-                echo mysqli_error();
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
             }
         }
     };
