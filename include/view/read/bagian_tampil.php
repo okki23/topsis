@@ -7,9 +7,8 @@
 		echo '	<button type="button" id="tambah" class="btn btn-success">TAMBAH BAGIAN</button>';
 		}
 	?>
-	
- 	<button class="btn btn-primary" onclick="printJS('../pdf/print_bagian.php')">  
-		<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+	<a href="../pdf/print_bagian.php" target="_blank"  class="btn btn-primary" > <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print </a>
+ 	 
 	<br>
 	&nbsp;
  
@@ -50,9 +49,7 @@
 <script>
 
 	 $(document).ready(function () {
-		$('.js-basic-example').DataTable({
-			responsive: true
-		});
+	
         $("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=bagian&crud=tambah");
           });

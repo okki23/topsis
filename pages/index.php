@@ -25,6 +25,7 @@
 
     <!-- Waves Effect Css -->
     <link href="../assets/plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="../vendor/bootstrap/css/print.min.css"  type="text/css" media="print">
 
     <!-- Animation Css -->
     <link href="../assets/plugins/animate-css/animate.css" rel="stylesheet" />
