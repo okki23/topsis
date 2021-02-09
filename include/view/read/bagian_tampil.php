@@ -7,8 +7,7 @@
 		echo '	<button type="button" id="tambah" class="btn btn-success">TAMBAH BAGIAN</button>';
 		}
 	?>
-	<a href="../pdf/print_bagian.php" target="_blank"  class="btn btn-primary" > <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print </a>
- 	 
+  
 	<br>
 	&nbsp;
  
@@ -50,6 +49,8 @@
 
 	 $(document).ready(function () {
 	
+		 
+
         $("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=bagian&crud=tambah");
           });
