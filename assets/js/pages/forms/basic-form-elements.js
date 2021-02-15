@@ -1,30 +1,7 @@
 $(function () {
     //Textarea auto growth
-    autosize($('textarea.auto-growth'));
-
-    $('.js-basic-example').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: [ 0, 1,]
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [ 0, 1,]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [ 0, 1, ]
-                }
-            }
-        ]
-    });
+    autosize($('textarea.auto-growth')); 
+    
     //Datetimepicker plugin
     $('.datetimepicker').bootstrapMaterialDatePicker({
         format: 'dddd DD MMMM YYYY - HH:mm',

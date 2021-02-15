@@ -14,7 +14,7 @@
                     </form>
              
 
-<script src="../vendor/jquery/jquery.min.js"></script>
+ 
 <script>
 
     function Save(){
@@ -36,4 +36,4 @@
     }
   
 </script>
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 

@@ -22,9 +22,7 @@
                     </div>
                 </div>
                 </form>
-            
-
-<script src="../vendor/jquery/jquery.min.js"></script>
+    
 <script> 
     function Save(){
         var nama_unit_kerja = $('#nama_unit_kerja').val();
@@ -45,4 +43,4 @@
 			});
     }
 </script>
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 

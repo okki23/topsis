@@ -11,11 +11,10 @@
 	<br>
 	&nbsp;
  
-	<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+	<table class="table table-bordered table-striped table-hover unit_datatable dataTable">
 				<thead class="panel-heading">
 					<tr>
-						<th class="text-center">Nama Unit Kerja</th> 
-						<th class="text-center">Nama Unit Kerja 2</th> 						
+						<th class="text-center">Nama Unit Kerja</th>  					
 						<th class="text-center">Aksi</th>
 					</tr>
 				</thead>
@@ -28,8 +27,7 @@
 							
 							while ($data=mysqli_fetch_array($hasil)) {
 							echo "<tr>";
-                            echo "  <td>{$data['nama_unit_kerja']}</td> 
-							<td>{$data['nama_unit_kerja']}</td> 
+                            echo "  <td>{$data['nama_unit_kerja']}</td>  
 									<td>";
 									 if($hak_akses==0 || $hak_akses==2  ){
 										echo "	<a class='btn btn-primary ubah' ref='".$data['id_unit_kerja']."'>Ubah</a>
@@ -46,6 +44,29 @@
  
 <script>
 	 $(document).ready(function () {
+		$('.unit_datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, 1,]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [ 0, 1,]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, ]
+                }
+            }
+        ]
+    });
 		$("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=unit_kerja&crud=tambah");
           });
