@@ -34,6 +34,21 @@ if(isset($_GET['navigasi'])){
         }
       }
 
+      if($_GET['navigasi']=='unit_kerja'){
+        if ($_GET['crud']=='view'){
+          include_once "../include/view/read/unit_kerja_tampil.php";
+        }
+        if($_GET['crud']=='edit'){
+          include_once "../include/view/edit/unit_kerja_edit.php";
+        }
+          if($_GET['crud']=='hapus'){
+          include_once "../include/kontrol/kontrol_unit_kerja.php";
+        }
+         if($_GET['crud']=='tambah'){
+          include_once "../include/view/create/unit_kerja.php";
+        }
+      }
+
       if($_GET['navigasi']=='pegawai'){
         if ($_GET['crud']=='view'){
           include_once "../include/view/read/pegawai_tampil.php";

@@ -9,8 +9,7 @@
     $newID = $char . sprintf("%04s", $noUrut);
 ?>
 
-
-                <div class="panel-body">
+ 
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="no_pegawai">NO PEGAWAI :</label>
@@ -34,19 +33,24 @@
                         <div class="form-group" id="tgl_lhr_group">
                             <label class="control-label col-sm-4" for="tanggal_lahir">TANGGAL LAHIR :</label>
                             <div class="col-sm-3">
-                                <div class='input-group date datetimepicker1'>
-                                    <input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="Tanggal Lahir" >
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                <div class="form-group">
+                                        <div class="form-line" id="bs_datepicker_container">
+                                            <input type="text" class="form-control" placeholder="Please choose a date...">
+                                        </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group" id="jekel_group">
                             <label class="control-label col-sm-4" for="jekel">JENIS KELAMIN :</label>
-                            <div class="col-sm-6 radio">
-                                <label class="col-sm-4"><input type="radio" class="radio-inline" style="width:20px; height:20px;" id="jekel" name="jekel" value="L">&nbsp; Laki-laki</label>
-                                <label class="col-sm-5"><input type="radio"  class="radio-inline" style="width:20px; height:20px;" id="jekel" name="jekel" value="P">&nbsp; Perempuan</label>
+                        
+                            <div class="demo-radio-button">
+                                <input name="group1" type="radio"  name="jekel" id="radio_1" />
+                                <label for="radio_1">Laki - Laki</label>
+
+                                <input name="group1" type="radio" name="jekel" id="radio_2" />
+                                <label for="radio_2">Perempuan</label>
+                                
+                                
                             </div>
                         </div>
                         <div class="form-group" id="agama_group">
@@ -75,9 +79,9 @@
                             </div>
                         </div>
                         <div class="form-group" id="no_telp_group">
-                            <label class="control-label col-sm-4" for="no_telp">NO TELPONE :</label>
+                            <label class="control-label col-sm-4" for="no_telp">NO TELEPON :</label>
                             <div class="col-sm-4">
-                                <input type="number" min="0" class="form-control" id="no_telp" name="no_telp" placeholder="No Telpone" >
+                                <input type="text"  class="form-control" id="no_telp" name="no_telp" placeholder="No Telpone" >
                             </div>
                         </div>
                         <div class="form-group" id="alamat_group">
@@ -97,19 +101,11 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-			<hr style="height:1px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-footer">
-				<div class="text-center">	
-					<button type="button" id="tambah" class="btn btn-success">SIMPAN</button>
-                    <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=pegawai&crud=view';" class="btn btn-danger">CANCEL</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
+                        <div class="text-center">	
+                            <button type="button" id="tambah" class="btn btn-success">SIMPAN</button>
+                            <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=pegawai&crud=view';" class="btn btn-danger">CANCEL</button>
+                        </div>
+                    </form> 
 
 <script src="../vendor/jquery/jquery.min.js"></script>
 
@@ -235,13 +231,7 @@
             });
             }
           });
-        $(function () {
-                $('.datetimepicker1').datetimepicker({
-                viewMode: 'years',
-                format: 'DD/MM/YYYY'
-            }
-                );
-            });
+    
       });
 
        

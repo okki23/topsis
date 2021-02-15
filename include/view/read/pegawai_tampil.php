@@ -1,8 +1,14 @@
-<div class="col-sm-11 col-sm-offset-2">  
-	<h2 class="text-center">DAFTAR PEGAWAI</h2> 
-	<div class="panel-group">
-		<div class="panel panel-default">
-			<table class="table table-bordered table-hover text-center panel panel-primary">
+ 
+
+ 
+ 	<?php
+		if($hak_akses==0 || $hak_akses==2 ){
+		 
+		echo '	<button type="button" id="tambah" class="btn btn-success">Tambah Pegawai</button> <br> &nbsp; ';
+		}
+	?>
+  
+  		<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
 				<thead class="panel-heading">
 					<tr>
 						<th class="text-center">NO</th>
@@ -69,25 +75,8 @@
 					?>
 				</tbody>
 			</table>
-						<hr style="height:2px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-heading">
-					<div class="row">
-						<div class="col-sm-12">
-						<?php
-						 if($hak_akses==0 || $hak_akses==2 ){
-							echo '<button type="button" id="tambah" class="btn btn-success">TAMBAH PEGAWAI</button>';
-						}
-						?>
-						<button class="btn btn-primary hidden-print" onclick="printJS('../pdf/print_pegawai.php')">
-						<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-
-						</div>
-					</div>
-			</div>
-		</div>
-	</div>
-</div>
-
+						 
+			 
 <script src="../vendor/jquery/jquery.min.js"></script>
 
 <script>

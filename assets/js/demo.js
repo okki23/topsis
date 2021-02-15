@@ -1,3 +1,4 @@
+$('.selectpicker').selectpicker();
 $(function () {
     skinChanger();
     activateNotificationAndTasksScroll();
