@@ -4,11 +4,7 @@
             $hasil = mysqli_query($db_link,$edit);
             $row=mysqli_fetch_array($hasil);
 ?>
-<div class="col-sm-8 col-sm-offset-3">  
-	<div class="panel-group">
-		<div class="panel panel-primary">
-            <div class="panel-heading"><h2 class="text-center">EDIT PEGAWAI</h2></div>
-                <div class="panel-body">
+
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="no_pegawai">NO PEGAWAI :</label>
@@ -32,19 +28,22 @@
                         <div class="form-group" id="tgl_lhr_group">
                             <label class="control-label col-sm-4" for="tanggal_lahir">TANGGAL LAHIR :</label>
                             <div class="col-sm-3">
-                                <div class='input-group date datetimepicker1'>
-                                    <input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="Tanggal Lahir" value="<?php echo $row['tanggal_lahir'];?>">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
+                            <div class="form-group">
+                                        <div class="form-line" id="bs_datepicker_container">
+                                            <input type="text" class="form-control"  id="tanggal_lahir" name="tanggal_lahir"  value="<?php echo $row['tanggal_lahir'];?>">
+                                        </div>
+                                </div> 
                             </div>
                         </div>
+                         
                         <div class="form-group" id="jekel_group">
-                            <label class="control-label col-sm-4" for="jekel">JENIS KELAMIN :</label>
-                            <div class="col-sm-6 radio">
-                                <label class="col-sm-4"><input type="radio" class="radio-inline" style="width:20px; height:20px;" id="jekel" name="jekel" value="L" <?php if($row['jekel']=='L') echo "checked='checked'";?>>&nbsp; Laki-laki</label>
-                                <label class="col-sm-5"><input type="radio"  class="radio-inline" style="width:20px; height:20px;" id="jekel" name="jekel" value="P" <?php if($row['jekel']=='P') echo "checked='checked'";?>>&nbsp; Perempuan</label>
+                            <label class="control-label col-sm-4" for="agama">JENIS KELAMIN :</label>
+                            <div class="col-sm-4">
+                                <select  class="form-control" name="jekel" id="jekel">  
+                                    <option value="">- Pilih Jenkel -</option>  
+                                    <option value="L" <?php if($row['jekel']=='L') echo "selected='selected'";?>>Laki-Laki</option>  
+                                    <option value="P" <?php if($row['jekel']=='P') echo "selected='selected'";?>>Perempuan</option>  
+                                </select>   
                             </div>
                         </div>
                         <div class="form-group" id="agama_group">
@@ -100,76 +99,41 @@
 			<hr style="height:1px; border:none;margin:0; color:#000; background-color:#428bca;">
 			<div class="panel-footer">
 				<div class="text-center">	
-					<button type="button" id="tambah" class="btn btn-success">SIMPAN</button>
+					<button type="button" onclick="Save();" class="btn btn-success">Simpan</button>
                     <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=pegawai&crud=view';" class="btn btn-danger">CANCEL</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/moment.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<script type="text/javascript">
- $(document).ready(function () {
-          $("#tambah").click(function () {
-            var no_pegawai = $('input[name=no_pegawai]').val();
-            var nama_pegawai = $('input[name=nama_pegawai]').val();
-            var tempat_lahir = $('input[name=tempat_lahir]').val();
-            var tanggal_lahir = $('input[name=tanggal_lahir]').val();
-            var jekel = $('input:radio[name=jekel]:checked').val();
-            var agama = $('select[name=agama]').val();
-            var status = $('select[name=status]').val();
-            var no_telp = $('input[name=no_telp]').val();
-            var alamat = $('textarea[name=alamat]').val();
-            var tanggal_masuk = $('input[name=tanggal_masuk]').val();
-            
-            $.ajax({
-              type: "POST",
-              url: "../include/kontrol/kontrol_pegawai.php",
-              data: 'crud=update&no_pegawai=' + no_pegawai +
-                 '&nama_pegawai=' + nama_pegawai+
-                 '&tempat_lahir='+tempat_lahir+
-                 '&tanggal_lahir='+tanggal_lahir+
-                 '&jekel='+jekel+
-                 '&agama='+agama+
-                 '&status='+status+
-                 '&no_telp='+no_telp+
-                 '&alamat='+alamat+
-                 '&tanggal_masuk='+tanggal_masuk,
-              success: function (respons) {
-                  if (respons=='berhasil'){
-                        $('#pesan_berhasil').text("Pegawai Berhasil Dirubah");
-                        $("#hasil").show();
-                        setTimeout(function(){
-                            $("#hasil").hide(); 
-                        }, 2000);
-                  }
-                  else {
-                        $('#pesan_gagal').text("Pegawai Gagal Dirubah");
-                        $("#gagal").show();
-                        setTimeout(function(){
-                            $("#gagal").hide(); 
-                        }, 2000);
-
-                  }
-                  
-              }
-            });
-            
-          });
-        $(function () {
-                $('.datetimepicker1').datetimepicker({
-                viewMode: 'years',
-                format: 'DD/MM/YYYY'
-            }
-                );
-            });
-      });
-
-       
+<script type="text/javascript"> 
+ 
+ function Save(){
+        var no_pegawai = $('input[name=no_pegawai]').val();
+        var nama_pegawai = $('input[name=nama_pegawai]').val();
+        var tempat_lahir = $('input[name=tempat_lahir]').val();
+        var tanggal_lahir = $('input[name=tanggal_lahir]').val();
+        var jekel = $('select[name=jekel]').val();
+        var agama = $('select[name=agama]').val();
+        var status = $('select[name=status]').val();
+        var no_telp = $('input[name=no_telp]').val();
+        var alamat = $('textarea[name=alamat]').val();
+        var tanggal_masuk = $('input[name=tanggal_masuk]').val();
+        $.ajax({
+				url:"../include/kontrol/controller.php",
+				type:"POST",
+				data:{crud:"edit",no_pegawai:no_pegawai,nama_pegawai:nama_pegawai,tempat_lahir:tempat_lahir,tanggal_lahir:tanggal_lahir,
+                    jekel:jekel,agama:agama,status:status,no_telp:no_telp,alamat:alamat,tanggal_masuk:tanggal_masuk,menu:"pegawai"},
+				success:function(response){
+					if (response = 1){
+                        alert('Berhasil Diubah!');
+	                    window.location='index.php?navigasi=pegawai&crud=view'; 
+                    }else {
+                        alert('Gagal!');
+                        window.location='index.php?navigasi=pegawai&crud=view'; 
+                    } 
+				}
+			});
+    } 
 </script>
+ 

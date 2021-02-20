@@ -9,12 +9,7 @@ $noUrut++;
 $char = "K-";
 $newID = $char . sprintf("%04s", $noUrut);
 ?>
-
-<div class="col-sm-6 col-sm-offset-4">  
-	<div class="panel-group">
-		<div class="panel panel-primary">
-            <div class="panel-heading"><h2 class="text-center">TAMBAH KRITERIA</h2></div>
-                <div class="panel-body">
+  
                     <form class="form-horizontal">
                         <div class="form-group" >
                             <label class="control-label col-sm-3" for="id_kriteria">ID Kriteria :</label>
@@ -38,61 +33,32 @@ $newID = $char . sprintf("%04s", $noUrut);
                             </select>
                             </div>
                         </div>
+                        <div class="text-center">	
+                            <button type="button" onclick="Save();" class="btn btn-success">Simpan</button>
+                            <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=kriteria&crud=view';" class="btn btn-danger">CANCEL</button>
+                        </div>
                     </form>
-                </div>
-			<hr style="height:1px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-footer">
-				<div class="text-center">	
-					<button type="sumbit" id="tambah" class="btn btn-success">SIMPAN</button>
-                    <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=kriteria&crud=view';" class="btn btn-danger">CANCEL</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script src="../vendor/jquery/jquery.min.js"></script>
+                
+ 
 <script>
-
- $(document).ready(function () {
-      
-          $("#tambah").click(function () {
-             var id_kriteria = $('input[name=id_kriteria]').val();
-            var nama_kriteria = $('input[name=nama_kriteria]').val();
-            var atribut= $('select[name=atribut]').val();
-            if (nama_kriteria=='' || nama_kriteria==null) {
-
-                $("#id_group").addClass("form-group has-error has-feedback");
-                $("#nama_kriteria").after("<span class='glyphicon glyphicon-remove form-control-feedback'></span>");
-                 $('#pesan_required').text("Nama Kriteria Tidak Boleh Kosong");
-                  $("#required").show();
-                }
-            else{
-            $.ajax({
-              type: "POST",
-              url: "../include/kontrol/kontrol_kriteria.php",
-              data: 'crud=tambah&id_kriteria='+id_kriteria+'&nama_kriteria=' + nama_kriteria + '&atribut=' +atribut,
-              success: function (respons) {
-                  if (respons=='berhasil'){
-                         $('#pesan_berhasil').text("Kriteria Berhasil Ditambah");
-                        $("#hasil").show();
-                        setTimeout(function(){
-                            $("#hasil").hide(); 
-                        }, 2000);
-                  }
-                  else {
-                        $('#pesan_gagal').text("Kriteria Gagal Ditambah");
-                        $("#gagal").show();
-                        setTimeout(function(){
-                            $("#gagal").hide(); 
-                        }, 2000);
-
-                  }
-              }
-            });
-            }
-          });
-      });
-      
+    function Save(){
+        var id_kriteria = $('#id_kriteria').val();
+        var nama_kriteria = $('#nama_kriteria').val();
+        var atribut = $('#atribut').val();
+        $.ajax({
+				url:"../include/kontrol/controller.php",
+				type:"POST",
+				data:{crud:"add",id_kriteria:id_kriteria,nama_kriteria:nama_kriteria,atribut:atribut,menu:"kriteria"},
+				success:function(response){
+					if (response = 1){
+                        alert('Berhasil Ditambahkan!');
+	                    window.location='index.php?navigasi=kriteria&crud=view'; 
+                    }else {
+                        alert('Gagal!');
+                        window.location='index.php?navigasi=kriteria&crud=view'; 
+                    } 
+				}
+			});
+    }
 </script>
-<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 

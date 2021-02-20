@@ -8,15 +8,14 @@
                         </div>
                        
                         <div class="text-center">	
-                        <button type="button" onclick="Save();" class="btn btn-success">SIMPAN</button>
-                        <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=unit_kerja&crud=view';" class="btn btn-danger">CANCEL</button>
-                    </div>
+                            <button type="button" onclick="Save();" class="btn btn-success">Simpan</button>
+                            <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=unit_kerja&crud=view';" class="btn btn-danger">CANCEL</button>
+                        </div>
                     </form>
              
 
  
-<script>
-
+<script> 
     function Save(){
         var nama_unit_kerja = $('#nama_unit_kerja').val();
         $.ajax({
@@ -33,7 +32,6 @@
                     } 
 				}
 			});
-    }
-  
+    } 
 </script>
  

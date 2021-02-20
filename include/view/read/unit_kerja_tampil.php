@@ -66,7 +66,7 @@
                 }
             }
         ]
-    });
+    	});
 		$("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=unit_kerja&crud=tambah");
           });

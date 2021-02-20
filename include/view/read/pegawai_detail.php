@@ -4,11 +4,7 @@
             $hasil = mysqli_query($db_link,$edit);
             $row=mysqli_fetch_array($hasil);
 ?>
-<div class="col-sm-8 col-sm-offset-3">  
-	<div class="panel-group">
-		<div class="panel panel-primary">
-            <div class="panel-heading"><h2 class="text-center">DETAIL PEGAWAI</h2></div>
-                <div class="panel-body">
+                <h2 align="center"> Detail Pegawai</h2>
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="no_pegawai">NO PEGAWAI : </label><?php echo $no_pegawai;?>
@@ -51,16 +47,7 @@
                            
                         </div>
                     </form>
-                </div>
-			<hr style="height:1px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-footer">
-				<div class="text-center">	
-                    <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=pegawai&crud=view';" class="btn btn-danger">CANCEL</button>
-					<button class="btn btn-primary hidden-print" onclick="printJS('../pdf/print_detail_pegawai.php?no_pegawai=<?php echo $no_pegawai; ?>')">
-					<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-
+                    <div class="text-center">	
+                    <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=pegawai&crud=view';" class="btn btn-info">Kembali</button>
+				 
 				</div>
-			</div>
-		</div>
-	</div>
-</div>

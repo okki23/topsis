@@ -55,16 +55,144 @@ switch($menu){
             }
          
         }
+
+
+    //kriteria
+    case "kriteria":
+        if($crud == 'add'){            
+            $id_kriteria=$_POST['id_kriteria']; 
+            $nama_kriteria=$_POST['nama_kriteria']; 
+            $atribut=$_POST['atribut']; 
+            $sql = "INSERT INTO kriteria (id_kriteria,nama_kriteria,atribut)
+                    VALUES ('".$id_kriteria."','".$nama_kriteria."','".$atribut."') ";
+            $hasil = mysqli_query($db_link,$sql); 
+            
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'edit'){
+            $id_kriteria=$_POST['id_kriteria']; 
+            $nama_kriteria=$_POST['nama_kriteria']; 
+            $atribut=$_POST['atribut']; 
+            $proses="UPDATE kriteria SET nama_kriteria='$nama_kriteria',atribut='$atribut' WHERE id_kriteria='$id_kriteria'";
+            $hasil = mysqli_query($db_link,$proses);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'delete'){
+            $id_kriteria = $_POST['id_kriteria']; 
+            $sql = "DELETE from kriteria where id_kriteria=".$id_kriteria;
+            $hasil = mysqli_query($db_link,$sql);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+         
+        }
+
+    //pegawai
+    case "pegawai":
+        if($crud == 'add'){            
+            $no_pegawai=$_POST['no_pegawai']; 
+            $nama_pegawai=$_POST['nama_pegawai']; 
+            $tempat_lahir=$_POST['tempat_lahir']; 
+            $tanggal_lahir=$_POST['tanggal_lahir']; 
+            $jekel=$_POST['jekel']; 
+            $agama=$_POST['agama']; 
+            $status=$_POST['status']; 
+            $no_telp=$_POST['no_telp']; 
+            $alamat=$_POST['alamat']; 
+            $tanggal_masuk=$_POST['tanggal_masuk'];  
+            $sql = "INSERT INTO pegawai (no_pegawai,nama,tempat_lahir,tanggal_lahir,jekel,agama,status_perkawinan,no_telp,alamat,tgl_masuk)
+                    VALUES ('".$no_pegawai."','".$nama_pegawai."',
+                    '".$tempat_lahir."',
+                    '".$tanggal_lahir."',
+                    '".$jekel."',
+                    '".$agama."',
+                    '".$status."',
+                    '".$no_telp."',
+                    '".$alamat."',
+                    '".$tanggal_masuk."') ";
+            $hasil = mysqli_query($db_link,$sql); 
+            
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'edit'){
+            $no_pegawai=$_POST['no_pegawai']; 
+            $nama_pegawai=$_POST['nama_pegawai']; 
+            $tempat_lahir=$_POST['tempat_lahir']; 
+            $tanggal_lahir=$_POST['tanggal_lahir']; 
+            $jekel=$_POST['jekel']; 
+            $agama=$_POST['agama']; 
+            $status=$_POST['status']; 
+            $no_telp=$_POST['no_telp']; 
+            $alamat=$_POST['alamat']; 
+            $tanggal_masuk=$_POST['tanggal_masuk']; 
+            $proses="UPDATE pegawai SET 
+            nama='$nama_pegawai',
+            tempat_lahir='$tempat_lahir',
+            tanggal_lahir='$tanggal_lahir',
+            jekel='$jekel',
+            agama='$agama',
+            status_perkawinan='$status',
+            no_telp='$no_telp',
+            alamat='$alamat',
+            tempat_lahir='$tempat_lahir'
+             WHERE no_pegawai='$no_pegawai'";
+            $hasil = mysqli_query($db_link,$proses);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'delete'){
+            $no_pegawai = $_POST['no_pegawai']; 
+            $sql = "DELETE from pegawai where no_pegawai=".$no_pegawai;
+            $hasil = mysqli_query($db_link,$sql);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+         
+        }
     default:
             echo "<script language=javascript>
                 alert('Sorry your operation note permitted!');
                 window.location='index.php?navigasi=bagian&crud=view';
                 </script>";
     }
-
-     
-    //kriteria
-    //pegawai
+   
     //jabatan
     //bobot_penilaian
     //penilaiain

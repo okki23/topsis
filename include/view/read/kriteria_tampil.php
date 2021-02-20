@@ -1,11 +1,18 @@
 
 
 
-<div class="col-sm-8 col-sm-offset-3">  
-	<h2 class="text-center">DAFTAR KRITERIA</h2> 
-	<div class="panel-group">
-		<div class="panel panel-default">
-			<table class="table table-bordered table-hover text-center panel panel-primary">
+ 
+ 	<?php
+		if($hak_akses==0 || $hak_akses==2 ){
+		 
+		echo '	<button type="button" id="tambah" class="btn btn-success">Tambah Kriteria</button>';
+		}
+	?>
+  
+	<br>
+	&nbsp;
+ 
+	<table class="table table-bordered table-striped table-hover kriteria_datatable dataTable">
 				<thead class="panel-heading">
 					<tr>
 						<th class="text-center">ID Kriteria</th>
@@ -41,29 +48,34 @@
 					?>
 				</tbody>
 			</table>
-						<hr style="height:2px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-heading">
-					<div class="row">
-						<div class="col-sm-12">
-						<?php
-						 if($hak_akses==0 || $hak_akses==2  ){
-							echo '<button type="button" id="tambah" class="btn btn-success">TAMBAH KRITERIA</button>';
-						}
-						?>
-						<button class="btn btn-primary hidden-print" onclick="printJS('../pdf/print_kriteria.php')">
-						<span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-
-						</div>
-					</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script src="../vendor/jquery/jquery.min.js"></script>
+						 
 
 <script>
 	 $(document).ready(function () {
+		$('.kriteria_datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                }
+            }
+        ]
+		});
+    	
         $("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=kriteria&crud=tambah");
           });

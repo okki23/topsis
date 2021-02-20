@@ -1,17 +1,21 @@
- 
+
+
 
  
  	<?php
 		if($hak_akses==0 || $hak_akses==2 ){
 		 
-		echo '	<button type="button" id="tambah" class="btn btn-success">Tambah Pegawai</button> <br> &nbsp; ';
+		echo '	<button type="button" id="tambah" class="btn btn-success">Tambah Pegawai </button>';
 		}
 	?>
   
-  		<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+	<br>
+	&nbsp;
+ 
+	<table class="table table-bordered table-striped table-hover pegawai_datatable dataTable">
 				<thead class="panel-heading">
 					<tr>
-						<th class="text-center">NO</th>
+						 
 						<th class="text-center">NO PEGAWAI</th>
 						<th class="text-center">NAMA PEGAWAI</th>
 						<th class="text-center">JENIS KELAMIN</th>
@@ -51,7 +55,7 @@
 							$no=1;
 							while ($data=mysqli_fetch_array($hasil)) {
 							echo "<tr>";
-                            echo "  <td>$no</td>
+                            echo "  
 							        <td>{$data['no_pegawai']}</td>
                                     <td>{$data['nama']}</td>
 									<td>";
@@ -76,11 +80,32 @@
 				</tbody>
 			</table>
 						 
-			 
-<script src="../vendor/jquery/jquery.min.js"></script>
-
+			  
 <script>
 	 $(document).ready(function () {
+		$('.pegawai_datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5]
+                }
+            }
+        ]
+		});
         $("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=pegawai&crud=tambah");
           });
