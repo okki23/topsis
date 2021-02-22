@@ -1,4 +1,5 @@
 <?php
+    include_once "../koneksi.php";
     $query = "SELECT max(no_pegawai) as maxKode FROM pegawai";
     $hasil = mysqli_query($db_link,$query);
     $data  = mysqli_fetch_array($hasil);
@@ -7,10 +8,13 @@
     $noUrut++;
     $char = "P-";
     $newID = $char . sprintf("%04s", $noUrut);
+    $qjabatan = "select * from jabatan";
+    $jabatan_list = mysqli_query($db_link,$qjabatan); 
 ?>
 
  
                     <form class="form-horizontal" id="myForm">
+                     
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="no_pegawai">NO PEGAWAI :</label>
                             <div class="col-sm-8">
@@ -38,6 +42,19 @@
                                             <input type="text" class="form-control" name="tanggal_lahir" id="tanggal_lahir" placeholder="Please choose a date...">
                                         </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="jabatan">JABATAN : </label>
+                            <div class="col-sm-6">
+                                 <select  class="form-control" name="jabatan" id="jabatan">  
+                                    <?php
+                                       
+                                       while ($jl=mysqli_fetch_assoc($jabatan_list)){ 
+                                           echo "<option value='".$jl['id_jabatan']."'>".$jl['nama_jabatan']."</option>";
+                                       }
+                                    ?>
+                                </select> 
                             </div>
                         </div>
                         <div class="form-group" id="jekel_group">
@@ -113,6 +130,7 @@
         var tempat_lahir = $('input[name=tempat_lahir]').val();
         var tanggal_lahir = $('input[name=tanggal_lahir]').val();
         var jekel = $('select[name=jekel]').val();
+        var jabatan = $('select[name=jabatan]').val();
         var agama = $('select[name=agama]').val();
         var status = $('select[name=status]').val();
         var no_telp = $('input[name=no_telp]').val();
@@ -122,7 +140,7 @@
 				url:"../include/kontrol/controller.php",
 				type:"POST",
 				data:{crud:"add",no_pegawai:no_pegawai,nama_pegawai:nama_pegawai,tempat_lahir:tempat_lahir,tanggal_lahir:tanggal_lahir,
-                    jekel:jekel,agama:agama,status:status,no_telp:no_telp,alamat:alamat,tanggal_masuk:tanggal_masuk,menu:"pegawai"},
+                    jekel:jekel,jabatan:jabatan,agama:agama,status:status,no_telp:no_telp,alamat:alamat,tanggal_masuk:tanggal_masuk,menu:"pegawai"},
 				success:function(response){
 					if (response = 1){
                         alert('Berhasil Ditambahkan!');

@@ -23,14 +23,7 @@ $hasil_pegawai=mysqli_query($db_link,$sql_pegawai);
 
 $b=0;        
 ?>
-
-
-<div class="col-sm-6 col-sm-offset-4">  
-	<div class="panel-group">
-		<div class="panel panel-primary">
-            <div class="panel-heading"><h2 class="text-center">TAMBAH PENILAIAN PEGAWAI</h2></div>
-                <div class="panel-body">
-                    <form class="form-horizontal">
+                     <form class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-sm-5" for="jabatan">Nama Pegawai : </label>
                         <div class="col-sm-6">
@@ -60,20 +53,12 @@ $b=0;
                         </div>
                         </div>
                         </div>
+                        <div class="text-center">	
+                            <button type="sumbit" id="tambah" class="btn btn-success">SIMPAN</button>
+                            <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=penilaian&crud=view';" class="btn btn-danger">CANCEL</button>
+                        </div>
                    </form>   
-                </div>
-			<hr style="height:1px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-footer">
-				<div class="text-center">	
-					<button type="sumbit" id="tambah" class="btn btn-success">SIMPAN</button>
-                    <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=penilaian&crud=view';" class="btn btn-danger">CANCEL</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script src="../vendor/jquery/jquery.min.js"></script>
+                
 <script>
  
  $(document).ready(function () {

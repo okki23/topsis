@@ -1,15 +1,4 @@
-<div class="col-sm-15 col-sm-offset-2" style="display: inline-block;">  
-	<h2 class="text-center">DAFTAR BOBOT PENILAIAN</h2> 
-	<div class="panel-group">
-		<div class="panel panel-default" style="padding:10px">
-            <div class="col-sm-3 input-group pull-right">
-         <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-        <input type="text" class="form-control" id="nama" placeholder="Search">
-        <span class="input-group-btn">
-        <button id="showall" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-align-justify"></i></button>
-        </span>
-        </div>
-        <br/><br/>
+ 
     <?php   
 
     $sql_kriteria="SELECT id_kriteria,nama_kriteria FROM kriteria ORDER BY id_kriteria";
@@ -228,11 +217,7 @@
 
 		</div>
 	</div>
-</div>
-
-
-<script src="../vendor/jquery/jquery.min.js"></script>
-
+</div>  
 <script>
 	 $(document).ready(function () {
 

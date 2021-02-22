@@ -12,9 +12,7 @@
                             <button type="button" id="cancel" onclick="window.location ='index.php?navigasi=unit_kerja&crud=view';" class="btn btn-danger">CANCEL</button>
                         </div>
                     </form>
-             
-
- 
+              
 <script> 
     function Save(){
         var nama_unit_kerja = $('#nama_unit_kerja').val();

@@ -23,6 +23,12 @@ $newID = $char . sprintf("%04s", $noUrut);
                             <input type="text" class="form-control" id="nama_kriteria" name="nama_kriteria" placeholder="Nama Kriteria"/>
                             </div>
                         </div>
+                        <div class="form-group" id="id_group">
+                        <label class="control-label col-sm-3" for="name">Bobot : </label>
+                         <div class="col-sm-8">
+                            <input class="form-control" id="bobot" type="text" name="bobot" placeholder="Bobot" />
+                        </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-sm-3" for="atribut">Atribut :</label>
                             <div class="col-sm-8"> 
@@ -45,10 +51,11 @@ $newID = $char . sprintf("%04s", $noUrut);
         var id_kriteria = $('#id_kriteria').val();
         var nama_kriteria = $('#nama_kriteria').val();
         var atribut = $('#atribut').val();
+        var bobot = $('#bobot').val();
         $.ajax({
 				url:"../include/kontrol/controller.php",
 				type:"POST",
-				data:{crud:"add",id_kriteria:id_kriteria,nama_kriteria:nama_kriteria,atribut:atribut,menu:"kriteria"},
+				data:{crud:"add",id_kriteria:id_kriteria,nama_kriteria:nama_kriteria,bobot:bobot,atribut:atribut,menu:"kriteria"},
 				success:function(response){
 					if (response = 1){
                         alert('Berhasil Ditambahkan!');

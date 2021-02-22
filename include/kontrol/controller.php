@@ -61,10 +61,11 @@ switch($menu){
     case "kriteria":
         if($crud == 'add'){            
             $id_kriteria=$_POST['id_kriteria']; 
-            $nama_kriteria=$_POST['nama_kriteria']; 
+            $nama_kriteria=$_POST['nama_kriteria'];
+            $bobot=$_POST['bobot'];
             $atribut=$_POST['atribut']; 
-            $sql = "INSERT INTO kriteria (id_kriteria,nama_kriteria,atribut)
-                    VALUES ('".$id_kriteria."','".$nama_kriteria."','".$atribut."') ";
+            $sql = "INSERT INTO kriteria (id_kriteria,nama_kriteria,bobot,atribut)
+                    VALUES ('".$id_kriteria."','".$nama_kriteria."','".$bobot."','".$atribut."') ";
             $hasil = mysqli_query($db_link,$sql); 
             
             if ($hasil) {
@@ -79,8 +80,9 @@ switch($menu){
         }else if($crud == 'edit'){
             $id_kriteria=$_POST['id_kriteria']; 
             $nama_kriteria=$_POST['nama_kriteria']; 
+            $bobot=$_POST['bobot']; 
             $atribut=$_POST['atribut']; 
-            $proses="UPDATE kriteria SET nama_kriteria='$nama_kriteria',atribut='$atribut' WHERE id_kriteria='$id_kriteria'";
+            $proses="UPDATE kriteria SET nama_kriteria='$nama_kriteria',bobot='$bobot',atribut='$atribut' WHERE id_kriteria='$id_kriteria'";
             $hasil = mysqli_query($db_link,$proses);
             if ($hasil) {
                 $resp = array("status"=>1);
@@ -114,16 +116,18 @@ switch($menu){
             $tempat_lahir=$_POST['tempat_lahir']; 
             $tanggal_lahir=$_POST['tanggal_lahir']; 
             $jekel=$_POST['jekel']; 
+            $jabatan=$_POST['jabatan']; 
             $agama=$_POST['agama']; 
             $status=$_POST['status']; 
             $no_telp=$_POST['no_telp']; 
             $alamat=$_POST['alamat']; 
             $tanggal_masuk=$_POST['tanggal_masuk'];  
-            $sql = "INSERT INTO pegawai (no_pegawai,nama,tempat_lahir,tanggal_lahir,jekel,agama,status_perkawinan,no_telp,alamat,tgl_masuk)
+            $sql = "INSERT INTO pegawai (no_pegawai,nama,tempat_lahir,tanggal_lahir,jekel,id_jabatan,agama,status_perkawinan,no_telp,alamat,tgl_masuk)
                     VALUES ('".$no_pegawai."','".$nama_pegawai."',
                     '".$tempat_lahir."',
                     '".$tanggal_lahir."',
                     '".$jekel."',
+                    '".$jabatan."',
                     '".$agama."',
                     '".$status."',
                     '".$no_telp."',
@@ -146,6 +150,7 @@ switch($menu){
             $tempat_lahir=$_POST['tempat_lahir']; 
             $tanggal_lahir=$_POST['tanggal_lahir']; 
             $jekel=$_POST['jekel']; 
+            $jabatan=$_POST['jabatan']; 
             $agama=$_POST['agama']; 
             $status=$_POST['status']; 
             $no_telp=$_POST['no_telp']; 
@@ -156,6 +161,7 @@ switch($menu){
             tempat_lahir='$tempat_lahir',
             tanggal_lahir='$tanggal_lahir',
             jekel='$jekel',
+            id_jabatan='$jabatan',
             agama='$agama',
             status_perkawinan='$status',
             no_telp='$no_telp',
@@ -174,8 +180,56 @@ switch($menu){
 
         }else if($crud == 'delete'){
             $no_pegawai = $_POST['no_pegawai']; 
-            $sql = "DELETE from pegawai where no_pegawai=".$no_pegawai;
-            $hasil = mysqli_query($db_link,$sql);
+            $sql = "DELETE from pegawai where no_pegawai = '$no_pegawai' "; 
+            $hasil = mysqli_query($db_link,$sql); 
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+         
+        }
+        
+        //jabatan
+    case "jabatan":
+        if($crud == 'add'){            
+            $nama_jabatan=$_POST['nama_jabatan']; 
+            $sql = "INSERT INTO jabatan (nama_jabatan)
+                    VALUES ('".$nama_jabatan ."') ";
+            $hasil = mysqli_query($db_link,$sql); 
+            
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'edit'){
+            $id_jabatan=$_POST['id_jabatan']; 
+            $nama_jabatan=$_POST['nama_jabatan']; 
+             
+            $proses="UPDATE jabatan SET 
+            nama_jabatan='$nama_jabatan' WHERE id_jabatan='$id_jabatan'";
+            $hasil = mysqli_query($db_link,$proses);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'delete'){
+            $id_jabatan = $_POST['id_jabatan']; 
+            $sql = "DELETE from jabatan where id_jabatan = '$id_jabatan' "; 
+            $hasil = mysqli_query($db_link,$sql); 
             if ($hasil) {
                 $resp = array("status"=>1);
                 echo json_encode($resp,TRUE);

@@ -18,6 +18,12 @@
                             <input class="form-control" id="nama_kriteria" type="text" name="nama_kriteria" value="<?php echo $row['nama_kriteria'];?>" />
                         </div>
                     </div>
+                    <div class="form-group" id="id_group">
+                        <label class="control-label col-sm-3" for="name">Bobot : </label>
+                         <div class="col-sm-8">
+                            <input class="form-control" id="bobot" type="text" name="bobot" value="<?php echo $row['bobot'];?>" />
+                        </div>
+                    </div>
                     <div class="form-group">
                       <label class="control-label col-sm-3" for="atribut">Atribut :</label>
                         <div class="col-sm-8"> 
@@ -37,11 +43,12 @@
       function Save(){
         var id_kriteria = $('#id_kriteria').val();
         var nama_kriteria = $('#nama_kriteria').val();
+        var bobot = $('#bobot').val();
         var atribut = $('#atribut').val();
         $.ajax({
 				url:"../include/kontrol/controller.php",
 				type:"POST",
-				data:{crud:"edit",id_kriteria:id_kriteria,nama_kriteria:nama_kriteria,atribut:atribut,menu:"kriteria"},
+				data:{crud:"edit",id_kriteria:id_kriteria,bobot:bobot,nama_kriteria:nama_kriteria,atribut:atribut,menu:"kriteria"},
 				success:function(response){
 					if (response = 1){
                         alert('Berhasil Diubah!');

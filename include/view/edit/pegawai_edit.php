@@ -3,6 +3,8 @@
             $edit=("select * from pegawai where no_pegawai='$no_pegawai'");
             $hasil = mysqli_query($db_link,$edit);
             $row=mysqli_fetch_array($hasil);
+            $qjabatan = "select * from jabatan";
+            $jabatan_list = mysqli_query($db_link,$qjabatan); 
 ?>
 
                     <form class="form-horizontal">
@@ -35,7 +37,21 @@
                                 </div> 
                             </div>
                         </div>
-                         
+                        <div class="form-group">
+                         <label class="control-label col-sm-3" for="name">JABATAN : </label>
+                         <div class="col-sm-8">
+                            <select  class="form-control" name="jabatan" id="jabatan" >  
+                                    <?php
+                                       while ($jl=mysqli_fetch_assoc($jabatan_list)){
+                                           echo "<option value='".$jl['id_jabatan']."'";
+                                           if ($row['id_jabatan']==$jl['id_jabatan']) echo "selected='selected'";
+                                           echo ">".$jl['nama_jabatan']."</option>";
+                                       }
+                                    ?>
+                                </select> 
+                        </div>
+					</div>
+						
                         <div class="form-group" id="jekel_group">
                             <label class="control-label col-sm-4" for="agama">JENIS KELAMIN :</label>
                             <div class="col-sm-4">
@@ -114,6 +130,7 @@
         var tempat_lahir = $('input[name=tempat_lahir]').val();
         var tanggal_lahir = $('input[name=tanggal_lahir]').val();
         var jekel = $('select[name=jekel]').val();
+        var jabatan = $('select[name=jabatan]').val();
         var agama = $('select[name=agama]').val();
         var status = $('select[name=status]').val();
         var no_telp = $('input[name=no_telp]').val();
@@ -123,7 +140,7 @@
 				url:"../include/kontrol/controller.php",
 				type:"POST",
 				data:{crud:"edit",no_pegawai:no_pegawai,nama_pegawai:nama_pegawai,tempat_lahir:tempat_lahir,tanggal_lahir:tanggal_lahir,
-                    jekel:jekel,agama:agama,status:status,no_telp:no_telp,alamat:alamat,tanggal_masuk:tanggal_masuk,menu:"pegawai"},
+                    jekel:jekel,jabatan:jabatan,agama:agama,status:status,no_telp:no_telp,alamat:alamat,tanggal_masuk:tanggal_masuk,menu:"pegawai"},
 				success:function(response){
 					if (response = 1){
                         alert('Berhasil Diubah!');

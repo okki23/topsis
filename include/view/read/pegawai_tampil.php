@@ -19,6 +19,7 @@
 						<th class="text-center">NO PEGAWAI</th>
 						<th class="text-center">NAMA PEGAWAI</th>
 						<th class="text-center">JENIS KELAMIN</th>
+						<th class="text-center">JABATAN</th>
 						<th class="text-center">AGAMA</th>
 						<th class="text-center">STATUS PERKAWINAN</th>
 						<th class="text-center">TANGGAL MASUK</th>
@@ -27,27 +28,8 @@
 				</thead>
 				<tbody>
 					<?php /*php pembuka tabel atas*/
-							$sql = "SELECT no_pegawai,nama,jekel,agama,status_perkawinan,tgl_masuk 
-							FROM pegawai a
-							LEFT JOIN jabatan_pegawai bb on a.no_pegawai=bb.id_pegawai
-							LEFT JOIN user b ON a.no_pegawai=b.id_pegawai
-							WHERE  bb.id_toko=
-							CASE WHEN $hak_akses=3 THEN
-							(SELECT distinct id_toko FROM jabatan_pegawai a 
-							INNER JOIN pegawai b ON a.id_pegawai=b.no_pegawai
-							INNER JOIN user c ON b.no_pegawai=c.id_pegawai
-							WHERE c.user_name='$username')  
-							ELSE bb.id_toko END
-							AND bb.id_bagian=
-							CASE WHEN $hak_akses=3 THEN(SELECT distinct id_bagian FROM jabatan_pegawai a 
-							INNER JOIN pegawai b ON a.id_pegawai=b.no_pegawai
-							INNER JOIN user c ON b.no_pegawai=c.id_pegawai
-							WHERE c.user_name='$username')
-							ELSE bb.id_bagian END
-							AND 1= CASE WHEN $hak_akses<>4 THEN 1
-							WHEN $hak_akses=4 AND b.user_name='$username' THEN 1
-							ELSE 0 END
-							ORDER BY no_pegawai";
+							$sql = "select a.*, b.nama_jabatan from pegawai a
+							left join jabatan b on b.id_jabatan = a.id_jabatan";
 							$hasil = mysqli_query($db_link,$sql);
 							if (!$hasil){
 							die(mysqli_error($db_link));}
@@ -62,7 +44,9 @@
 									if ($data['jekel']=='L') {echo 'Laki - laki'; }
 									ELSE echo 'Perempuan';
 							echo "</td>
-									<td>{$data['agama']}</td>
+							<td>{$data['nama_jabatan']}</td>	
+								<td>{$data['agama']}</td>
+									
 									<td>{$data['status_perkawinan']}</td>
 									<td>".date("d-m-Y", strtotime($data['tgl_masuk']))."</td>";
 							echo "<td>
@@ -115,38 +99,22 @@
 			 window.location.replace("index.php?navigasi=pegawai&crud=edit&no_pegawai="+no_pegawai);
 		});
 
-		$('.hapus').click(function() {
-    		var no_pegawai =$(this).attr('ref');
-			var nama=$(this).attr('nama');
-			 if (confirm('Yakin menghapus Pegawai '+nama+'????')) {
-					$.ajax({
-					type: "POST",
-					url: "../include/kontrol/kontrol_pegawai.php",
-					data: 'crud=hapus&no_pegawai='+no_pegawai,
-					success: function (respons) {
-						
-						console.log(respons);
-						if (respons=='berhasil'){
-							$('#pesan_berhasil').text("Pegawai Berhasil Dihapus");
-								$("#hasil").show();
-								setTimeout(function(){
-									$("#hasil").hide();
-									window.location.reload(1);
-								}, 2000);
-						}
-
-						else {
-								$('#pesan_gagal').text("Pegawai Gagal Dihapus");
-								$("#gagal").show();
-								setTimeout(function(){
-									$("#gagal").hide(); 
-									window.location.reload(1);
-								}, 2000);
-							
-						}
-					}
-					});
-			 }
+		$('.hapus').click(function() { 
+    		var no_pegawai = $(this).attr('ref'); 
+			$.ajax({
+				url:"../include/kontrol/controller.php",
+				type:"POST",
+				data:{crud:"delete",no_pegawai:no_pegawai,menu:"pegawai"},
+				success:function(response){
+					if (response = 1){
+                        alert('Berhasil Dihapus!');
+	                    window.location='index.php?navigasi=pegawai&crud=view'; 
+                    }else {
+                        alert('Gagal!');
+                        window.location='index.php?navigasi=pegawai&crud=view'; 
+                    } 
+				}
+			});
 			
 		});
 		$(".detail").click(function () {

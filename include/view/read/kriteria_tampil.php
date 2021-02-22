@@ -17,6 +17,7 @@
 					<tr>
 						<th class="text-center">ID Kriteria</th>
 						<th class="text-center">Nama Kriteria</th>
+						<th class="text-center">Bobot</th>
 						<th class="text-center">Atribut</th>
                         <th class="text-center">Aksi</th>
 					</tr>
@@ -32,6 +33,7 @@
 							echo "<tr>";
                             echo "  <td>{$data['id_kriteria']}</td>
                                     <td>{$data['nama_kriteria']}</td>
+									<td>{$data['bobot']}</td>
                                     <td>";
 									if ($data['atribut']=='K') {echo 'Keuntungan'; }
 									ELSE echo 'Biaya';

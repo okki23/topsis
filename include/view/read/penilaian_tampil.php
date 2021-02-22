@@ -1,18 +1,5 @@
-<div class="col-sm-12 col-sm-offset-2">  
-	<h2 class="text-center">DAFTAR PENILAIAN PEGAWAI</h2> 
-	<div class="panel-group" >
-		<div class="panel panel-default" style="padding:10px" >
-            <br/>
-              <div class="col-sm-3 input-group pull-right">
-         <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-        <input type="text" class="form-control" id="nama" placeholder="Search">
-        <span class="input-group-btn">
-        <button id="showall" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-align-justify"></i></button>
-        </span>
-        </div>
-        <br/><br/>
 <?php   
-
+include "../koneksi.php";
 $sql_kriteria="SELECT id_kriteria,nama_kriteria FROM kriteria ORDER BY id_kriteria";
 $hasil_kriteria=mysqli_query($db_link,$sql_kriteria);
 $total_kriteria=mysqli_num_rows($hasil_kriteria);
@@ -147,9 +134,7 @@ $hasil_penilaian=mysqli_query($db_link,$sql_penilaian);
 			</div>
 		</div>
 	</div>
-</div>
-
-<script src="../vendor/jquery/jquery.min.js"></script>
+</div> 
 
 <script>
 	 $(document).ready(function () {
