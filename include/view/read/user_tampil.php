@@ -1,8 +1,17 @@
-<div class="col-sm-8 col-sm-offset-3">  
-	<h2 class="text-center">DAFTAR USER</h2> 
-	<div class="panel-group">
-		<div class="panel panel-default">
-			<table class="table table-bordered table-hover text-center panel panel-primary">
+
+
+ 
+ 	<?php
+		if($hak_akses==0 || $hak_akses==2 ){
+		 
+		echo '	<button type="button" id="tambah" class="btn btn-success">Tambah User </button>';
+		}
+	?>
+  
+	<br>
+	&nbsp;
+ 
+	<table class="table table-bordered table-striped table-hover user_datatable dataTable">
 				<thead class="panel-heading">
 					<tr>
 						<th class="text-center">No Pegawai</th>
@@ -36,7 +45,7 @@
 										echo "Koordinator";
 									}
 									else if($data['hak_akses']==4){
-										echo "Pegawai";
+										echo "Karyawan";
 									}
 									echo "</td>
 									<td>
@@ -50,22 +59,32 @@
 					?>
 				</tbody>
 			</table>
-						<hr style="height:2px; border:none;margin:0; color:#000; background-color:#428bca;">
-			<div class="panel-heading">
-					<div class="row">
-						<div class="col-sm-12">
-							<button type="button" id="tambah" class="btn btn-success">TAMBAH USER</button>
-						</div>
-					</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script src="../vendor/jquery/jquery.min.js"></script>
-
+					  
 <script>
 	 $(document).ready(function () {
+		$('.user_datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0,1,2]
+                }
+            }
+        ]
+		});
         $("#tambah").click(function () {
            		window.location.replace("index.php?navigasi=user&crud=tambah");
           });
@@ -75,38 +94,22 @@
 			 window.location.replace("index.php?navigasi=user&crud=edit&id_pegawai="+id_pegawai);
 		});
 
-		$('.hapus').click(function() {
-    		var id_pegawai =$(this).attr('ref');
-			var username=$(this).attr('nama');
-			 if (confirm('Yakin menghapus User '+id_pegawai+'????')) {
-					$.ajax({
-					type: "POST",
-					url: "../include/kontrol/kontrol_user.php",
-					data: 'crud=hapus&id_pegawai='+id_pegawai+'&username='+username,
-					success: function (respons) {
-						
-						console.log(respons);
-						if (respons=='berhasil'){
-							$('#pesan_berhasil').text("User Berhasil Dihapus");
-								$("#hasil").show();
-								setTimeout(function(){
-									$("#hasil").hide();
-									window.location.reload(1);
-								}, 2000);
-						}
-
-						else {
-								$('#pesan_gagal').text("User Gagal Dihapus");
-								$("#gagal").show();
-								setTimeout(function(){
-									$("#gagal").hide(); 
-									window.location.reload(1);
-								}, 2000);
-							
-						}
-					}
-					});
-			 }
+		$('.hapus').click(function() { 
+    		var id_pegawai = $(this).attr('ref'); 
+			$.ajax({
+				url:"../include/kontrol/controller.php",
+				type:"POST",
+				data:{crud:"delete",id_pegawai:id_pegawai,menu:"user"},
+				success:function(response){
+					if (response = 1){
+                        alert('Berhasil Dihapus!');
+	                    window.location='index.php?navigasi=user&crud=view'; 
+                    }else {
+                        alert('Gagal!');
+                        window.location='index.php?navigasi=user&crud=view'; 
+                    } 
+				}
+			});
 			
 		});
 		 

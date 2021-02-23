@@ -305,19 +305,60 @@ switch($menu){
          
         }
 
-    //usulan_pegawai_terbaik
+    //hasil_top
+
+    //user
+           if($crud == 'add'){            
+            $pegawai=$_POST['pegawai'];
+            $user_name=$_POST['user_name'];
+			$password=$_POST['password'];
+			$hak_akses=$_POST['hak_akses'];
  
-    /*
-    
-$sql = "DELETE from unit_kerja where id_unit_kerja='$id_unit_kerja'";
-$hasil = mysqli_query($db_link,$sql);
-if ($hasil) {
-    $resp = array("status"=>1);
-    echo json_encode($resp,TRUE);
-} 
-else {
-    $resp = array("status"=>2);
-    echo json_encode($resp,TRUE);
-}
- */
+            $sql = "INSERT INTO user (user_name, password, hak_akses, id_pegawai) 
+			VALUES ('".$user_name."', '".$password."',".$hak_akses.", '".$pegawai."')";
+            $hasil = mysqli_query($db_link,$sql); 
+            
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'edit'){
+            $id_pegawai=$_POST['id_pegawai'];
+            $pegawai=$_POST['pegawai'];
+            $user_name=$_POST['user_name'];
+			$password=$_POST['password'];
+			$hak_akses=$_POST['hak_akses'];
+
+            $proses="UPDATE user SET user_name='$user_name',
+            password='$password',
+            hak_akses='$hak_akses'
+			WHERE id_pegawai='$id_pegawai'";
+            $hasil = mysqli_query($db_link,$proses);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            } 
+        }else if($crud == 'delete'){ 
+            $id_pegawai=$_POST['id_pegawai'];
+            $sql_delete = "DELETE from user where id_pegawai='$id_pegawai' ";
+            $hasil = mysqli_query($db_link,$sql_delete);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            } 
+        }
+
 ?>

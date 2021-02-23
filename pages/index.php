@@ -229,15 +229,15 @@
                             </a>
                            </li>';  
                         }
-                         if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
-                            echo '
-                            <li>
-                            <a href="index.php?navigasi=usulan_pegawai_terbaik&crud=view">
-                                <i class="material-icons">home</i>
-                                <span> Usulan Pegawai Terbaik </span>
-                            </a>
-                           </li>';   
-                        }
+                        //  if($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
+                        //     echo '
+                        //     <li>
+                        //     <a href="index.php?navigasi=usulan_pegawai_terbaik&crud=view">
+                        //         <i class="material-icons">home</i>
+                        //         <span> Usulan Pegawai Terbaik </span>
+                        //     </a>
+                        //    </li>';   
+                        // }
                         if($hak_akses==0 || $hak_akses==2){
                             
                             echo '
@@ -263,15 +263,15 @@
                                     </a>
                                    </li>';   
                                 }
-                                if ($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
-                                    echo '
-                                    <li>
-                                    <a href="index.php?navigasi=history_usulan_pegawai_terbaik&crud=view">
-                                        <i class="material-icons">home</i>
-                                        <span> History Usulan Pegawai Terbaik </span>
-                                    </a>
-                                   </li>';   
-                                }
+                                // if ($hak_akses==0 || $hak_akses==1 || $hak_akses==2 || $hak_akses==3 || $hak_akses==4){
+                                //     echo '
+                                //     <li>
+                                //     <a href="index.php?navigasi=history_usulan_pegawai_terbaik&crud=view">
+                                //         <i class="material-icons">home</i>
+                                //         <span> History Usulan Pegawai Terbaik </span>
+                                //     </a>
+                                //    </li>';   
+                                // }
                             echo '    </ul>
                                 <!-- /.nav-second-level -->
                             </li>
