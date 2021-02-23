@@ -246,10 +246,65 @@ switch($menu){
                 window.location='index.php?navigasi=bagian&crud=view';
                 </script>";
     }
-   
-    //jabatan
-    //bobot_penilaian
-    //penilaiain
+    
+    //penilaian 
+        if($crud == 'add'){            
+            $tgl_penilaian = $_POST['tgl_penilaian'];
+            $kriteria = $_POST['kriteria'];
+            $nilai = $_POST['nilai'];
+            $nama_pegawai=$_POST['nama_pegawai']; 
+ 
+            $sql = "INSERT INTO penilaian (no_pegawai,id_kriteria,nilai,tgl_penilaian)
+                    VALUES ('".$nama_pegawai ."','".$kriteria ."','".$nilai ."','".$tgl_penilaian ."') ";
+            $hasil = mysqli_query($db_link,$sql); 
+            
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'edit'){
+            $id_penilaian = $_POST['id_penilaian'];
+            $tgl_penilaian = $_POST['tgl_penilaian'];
+            $kriteria = $_POST['kriteria'];
+            $nilai = $_POST['nilai'];
+            $nama_pegawai=$_POST['nama_pegawai']; 
+             
+            $proses="UPDATE penilaian SET 
+            tgl_penilaian='$tgl_penilaian',
+            id_kriteria='$kriteria',
+            nilai='$nilai',
+            no_pegawai='$nama_pegawai'
+             WHERE id_penilaian='$id_penilaian'";
+            $hasil = mysqli_query($db_link,$proses);
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+
+        }else if($crud == 'delete'){
+            $no_penilaian = $_POST['no_penilaian']; 
+            $sql = "DELETE from penilaian where id_penilaian = '$no_penilaian' "; 
+            $hasil = mysqli_query($db_link,$sql); 
+            if ($hasil) {
+                $resp = array("status"=>1);
+                echo json_encode($resp,TRUE);
+            } 
+            else {
+                $resp = array("status"=>2);
+                echo json_encode($resp,TRUE);
+            }
+         
+        }
+
     //usulan_pegawai_terbaik
  
     /*

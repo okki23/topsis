@@ -122,8 +122,7 @@
                     </form> 
  
 
-<script type="text/javascript"> 
- 
+<script type="text/javascript">  
  function Save(){
         var no_pegawai = $('input[name=no_pegawai]').val();
         var nama_pegawai = $('input[name=nama_pegawai]').val();
