@@ -1,184 +1,345 @@
+<?php 
+
+$conn = new mysqli("localhost", "root", "", "spk_topsis");
  
+$tampil = $conn->query("SELECT b.nama,c.nama_kriteria,a.nilai,c.bobot
+FROM
+  penilaian a
+  JOIN
+    pegawai b USING(no_pegawai)
+  JOIN
+    kriteria c USING(id_kriteria)");
 
-<div class="col-sm-12 col-xs-offset-2">  
- 
-	<h2 class="text-center">LAPORAN PENILAIAN PEGAWAI</h2> 
-	<div class="panel-group" >
-		<div class="panel panel-default" style="padding:10px" >
-            <br/>
+$data      =array();
+$kriterias =array();
+$bobot     =array();
+$nilai_kuadrat =array();
 
-        <div class="col-sm-3 input-group pull-right">
-         <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-        <input type="text" class="form-control" id="nama" placeholder="Search">
-        <span class="input-group-btn">
-        <button id="showall" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-align-justify"></i></button>
-        </span>
-        </div>
-        <br/><br/>
-<?php   
+if ($tampil) {
+while($row=$tampil->fetch_object()){
+if(!isset($data[$row->nama])){
+$data[$row->nama]=array();
+}
+if(!isset($data[$row->nama][$row->nama_kriteria])){
+$data[$row->nama][$row->nama_kriteria]=array();
+}
+if(!isset($nilai_kuadrat[$row->nama_kriteria])){
+$nilai_kuadrat[$row->nama_kriteria]=0;
+}
+$bobot[$row->nama_kriteria]=$row->bobot;
+$data[$row->nama][$row->nama_kriteria]=$row->nilai;
+$nilai_kuadrat[$row->nama_kriteria]+=pow($row->nilai,2);
+$kriterias[]=$row->nama_kriteria;
+}
+}
 
-$sql_kriteria="SELECT id_kriteria,nama_kriteria FROM kriteria ORDER BY id_kriteria";
-$hasil_kriteria=mysqli_query($db_link,$sql_kriteria);
-$total_kriteria=mysqli_num_rows($hasil_kriteria);
-
-
-$get_user_cek=mysqli_query ($db_link,"SELECT A.id_toko FROM jabatan_pegawai A
-                            INNER JOIN pegawai B ON A.id_pegawai=B.no_pegawai
-                            INNER JOIN user c ON B.no_pegawai=c.id_pegawai
-                            WHERE c.user_name=CASE WHEN $hak_akses=3 
-                THEN '".$username."' ELSE c.user_name END ");
-$get_toko_user=mysqli_fetch_assoc($get_user_cek);
-
-
-
-
-$sql_penilaian="SELECT DISTINCT C.nama,B.id_jabatan,A.status FROM penilaian A
-                INNER JOIN jabatan_pegawai B ON A.id_jabatan=B.id_jabatan
-                INNER JOIN pegawai C ON B.id_pegawai=C.no_pegawai
-                WHERE B.id_toko=(CASE WHEN $hak_akses =3 
-                THEN ".$get_toko_user['id_toko']." ELSE B.id_toko END)
-				AND B.id_toko=(CASE WHEN $hak_akses =4 
-                THEN ".$get_toko_user['id_toko']." ELSE B.id_toko END)
-                ORDER BY C.nama asc, A.Status desc";
-$hasil_penilaian=mysqli_query($db_link,$sql_penilaian);
-        echo '<table class="table table-bordered table-hover text-center panel panel-primary" >
-                    
-                <thead class="panel-heading">
-                <tr>
-                    <th class="text-center" rowspan="2" style="vertical-align: middle;">NO</th>
-                    <th class="text-center" rowspan="2" style="vertical-align: middle;">NAMA PEGAWAI</th>
-                    <th class="text-center" colspan="'.$total_kriteria.'">KRITERIA</th>
-                    <th class="text-center" rowspan="2" style="vertical-align: middle;">BAGIAN</th>
-                    <th class="text-center" rowspan="2" style="vertical-align: middle;">JABATAN</th>
-                    <th class="text-center" rowspan="2" style="vertical-align: middle;">STATUS</th>
-                    <th class="text-center" rowspan="2" style="vertical-align: middle;">AKSI</th>
-                </tr>
-                
-                <tr>';
-
-        $kriteriaarray=array();
-            while($data_kriteria=mysqli_fetch_assoc($hasil_kriteria)){
-                $kriteriaarray[]=''.$data_kriteria['id_kriteria'].'';
-                echo "
-                <th>".$data_kriteria['nama_kriteria']."</th>
-                ";
-            }
-        echo '</tr>
-        </thead>
-        <tbody> ';
-        $s=1;
-
-        while ($data_penilaian=mysqli_fetch_assoc($hasil_penilaian)) {
-            echo "<tr class='tablerow'>";
-            echo "  
-                <td></td>
-                <td>{$data_penilaian['nama']}</td>";
-                $sql_jabatan="SELECT B.jabatan,C.bagian FROM penilaian A
-                INNER JOIN jabatan_pegawai B ON A.id_jabatan=B.id_jabatan
-                INNER JOIN bagian C ON B.id_bagian=C.id_bagian
-                WHERE  B.id_jabatan='".$data_penilaian['id_jabatan']."'
-                AND A.status=".$data_penilaian['status']."
-                ORDER BY A.id_nilai ASC";
-                $hasil_jabatan = mysqli_query($db_link,$sql_jabatan);
-                if (!$hasil_jabatan){
-                        echo mysqli_error($db_link);
-                die("Gagal Query Data ");
-                }
-                $data_jabatan=mysqli_fetch_assoc($hasil_jabatan);
-
-            $d=1;
-            while ($d<=$total_kriteria){
-                $sql="SELECT A.id_nilai,BB.nilai FROM penilaian A
-                        INNER JOIN detail_penilaian BB ON A.id_nilai=BB.id_nilai
-                         INNER JOIN detail_bobot CC ON BB.id_detailbobot=CC.id_detailbobot
-                        INNER JOIN bobot_penilaian B ON CC.id_bobot=B.id_bobot
-                        INNER JOIN jabatan_pegawai C ON A.id_jabatan=C.id_jabatan
-                        WHERE CC.id_kriteria='".$kriteriaarray[$d-1]."'
-                        AND C.id_jabatan='".$data_penilaian['id_jabatan']."'
-                        AND A.status=".$data_penilaian['status']."
-                        ORDER BY A.id_nilai ASC";
-                $hasil = mysqli_query($db_link,$sql);
-                if (!$hasil){
-                        echo mysqli_error($db_link);
-                die("Gagal Query Data ");
-                }
-                $cek=mysqli_num_rows($hasil);
-                if($cek==0){
-                    echo "<td></td>";
-                    }
-                else {
-                    $data=mysqli_fetch_assoc($hasil);
-                    echo "<td>".$data['nilai']."</td>";
-                }
-                $d++;
-            }
-         echo  "
-                <td>".$data_jabatan['jabatan']."</td>
-                <td>".$data_jabatan['bagian']."</td>
-                <td>";
-                if ( $data_penilaian['status']==1 )echo 'Aktif';
-                else echo'Non Aktif';
-               
-        echo "</td>
-                <td>
-                    <a class='btn btn-primary detail' ref='".$data_penilaian['id_jabatan']."'>Detail</a>
-                </td>";
-        
-            echo "</tr>";
-        $s++;
-        }
-    echo '</tbody></table>
-    <br/>
-
-    ';
+$kriteria     =array_unique($kriterias);
+$jml_kriteria =count($kriteria);
 
 ?>
-	 <center>
-             <button class="btn btn-primary hidden-print" onclick="printJS('../pdf/print_laporan_penilaian_pegawai.php')"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-	    </center>
-		</div>
-	</div>
-    
-  
-</div>
+<a href="../report.php" target="_blank" class="btn btn-info"> Print Laporan </a>
+        <div class="panel-heading">
+            <h3 align="left">    Evaluation Matrix (x<sub>ij</sub>) </h3>
+      	    </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th rowspan='3'>No</th>
+                    <th rowspan='3'>Alternatif</th>
+                    <th rowspan='3'>Nama</th>
+                    <th colspan='<?php echo $jml_kriteria;?>'>Kriterias</th>
+                  </tr>
+                  <tr>
+                    <?php
+                    foreach($kriteria as $k)
+                      echo "<th>$k</th>\n";
+                    ?>
+                  </tr>
+                  <tr>
+                    <?php
+                    for($n=1;$n<=$jml_kriteria;$n++)
+                      echo "<th>K$n</th>";
+                    ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i=0;
+                  foreach($data as $nama=>$krit){
+                    echo "<tr>
+                      <td>".(++$i)."</td>
+                      <th>A$i</th>
+                      <td>$nama</td>";
+                    foreach($kriteria as $k){
+                      echo "<td align='center'>$krit[$k]</td>";
+                    }
+                    echo "</tr>\n";
+                  }
+                  ?>
+                </tbody>
+              </table>
+         </div>
 
-<script src="../vendor/jquery/jquery.min.js"></script>
+         <div class="panel-heading">
+         <h3 align="left">   Rating Kinerja Ternormalisasi (r<sub>ij</sub>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th rowspan='3'>No</th>
+                    <th rowspan='3'>Alternatif</th>
+                    <th rowspan='3'>Nama</th>
+                    <th colspan='<?php echo $jml_kriteria;?>'>Kriteria</th>
+                  </tr>
+                  <tr>
+                    <?php
+                    foreach($kriteria as $k)
+                      echo "<th>$k</th>\n";
+                    ?>
+                  </tr>
+                  <tr>
+                    <?php
+                    for($n=1;$n<=$jml_kriteria;$n++)
+                      echo "<th>K$n</th>";
+                    ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i=0;
+                  foreach($data as $nama=>$krit){
+                    echo "<tr>
+                      <td>".(++$i)."</td>
+                      <th>A{$i}</th>
+                      <td>{$nama}</td>";
+                    foreach($kriteria as $k){
+                      echo "<td align='center'>".@round(($krit[$k]/sqrt($nilai_kuadrat[$k])),4)."</td>";
+                    }
+                    echo
+                     "</tr>\n";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
 
-<script>
-	 $(document).ready(function () {
+            <div class="panel-heading">
+            <h3 align="left">   Rating Bobot Ternormalisasi(y<sub>ij</sub>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th rowspan='3'>No</th>
+                    <th rowspan='3'>Alternatif</th>
+                    <th rowspan='3'>Nama</th>
+                    <th colspan='<?php echo $jml_kriteria;?>'>Kriteria</th>
+                  </tr>
+                  <tr>
+                    <?php
+                    foreach($kriteria as $k)
+                      echo "<th>$k</th>\n";
+                    ?>
+                  </tr>
+                  <tr>
+                    <?php
+                    for($n=1;$n<=$jml_kriteria;$n++)
+                      echo "<th>K$n</th>";
+                    ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i=0;
+                  $y=array();
+                  foreach($data as $nama=>$krit){
+                    echo "<tr>
+                      <td>".(++$i)."</td>
+                      <th>A{$i}</th>
+                      <td>{$nama}</td>";
+                    foreach($kriteria as $k){
+                      @$y[$k][$i-1]=round(($krit[$k]/sqrt($nilai_kuadrat[$k])),4)*$bobot[$k];
+                      echo "<td align='center'>".$y[$k][$i-1]."</td>";
+                    }
+                    echo
+                     "</tr>\n";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
 
-        $(".detail").click(function () {
-				var id_jabatan=$(this).attr('ref');
-			 window.location.replace("index.php?navigasi=laporan_penilaian_pegawai&crud=detail&id_jabatan="+id_jabatan);
-          });
-  
-   
+            <div class="panel-heading">
+            <h3 align="left">   Solusi Ideal positif (A<sup>+</sup>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan='<?php echo $jml_kriteria;?>'>Kriteria</th>
+                  </tr>
+                  <tr>
+                    <?php
+                    foreach($kriteria as $k)
+                      echo "<th>$k</th>\n";
+                    ?>
+                  </tr>
+                  <tr>
+                    <?php
+                    for($n=1;$n<=$jml_kriteria;$n++)
+                      echo "<th>y<sub>{$n}</sub><sup>+</sup></th>";
+                    ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <?php
+                    $yplus=array();
+                    foreach($kriteria as $k){
+                      $yplus[$k]=([$k]?max($y[$k]):min($y[$k]));
+                      echo "<th>$yplus[$k]</th>";
+                    }
+                    ?>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-    var $rows = $('tbody tr');
-     $rows.show().filter(function() {
-    $("tr:contains('Non')").hide();
-     }).hide();
+            <div class="panel-heading">
+            <h3 align="left"> Solusi Ideal negatif (A<sup>-</sup>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th colspan='<?php echo $jml_kriteria;?>'>Kriteria</th>
+                  </tr>
+                  <tr>
+                    <?php
+                    foreach($kriteria as $k)
+                      echo "<th>{$k}</th>\n";
+                    ?>
+                  </tr>
+                  <tr>
+                    <?php
+                    for($n=1;$n<=$jml_kriteria;$n++)
+                      echo "<th>y<sub>{$n}</sub><sup>-</sup></th>";
+                    ?>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <?php
+                    $ymin=array();
+                    foreach($kriteria as $k){
+                      $ymin[$k]=[$k]?min($y[$k]):max($y[$k]);
+                      echo "<th>{$ymin[$k]}</th>";
+                    }
 
-    $('tbody tr:visible').each(function (i) {
-   $(" td:first", this).html(i+1);
-    });
+                    ?>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-    $('#showall').click(function() {
-    $("tr:contains('Non')").toggle();
-    $('tbody tr:visible').each(function (i) {
-   $(" td:first", this).html(i+1);
-    });
-    });
+            <div class="panel-heading">
+            <h3 align="left">  Jarak positif (D<sub>i</sub><sup>+</sup>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Alternatif</th>
+                    <th>Nama</th>
+                    <th>D<suo>+</sup></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i=0;
+                  $dplus=array();
+                  foreach($data as $nama=>$krit){
+                    echo "<tr>
+                      <td>".(++$i)."</td>
+                      <th>A{$i}</th>
+                      <td>{$nama}</td>";
+                    foreach($kriteria as $k){
+                      if(!isset($dplus[$i-1])) $dplus[$i-1]=0;
+                      $dplus[$i-1]+=pow($yplus[$k]-$y[$k][$i-1],2);
+                    }
+                    echo "<td>".round(sqrt($dplus[$i-1]),6)."</td>
+                     </tr>\n";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
 
-    var $rows = $('tbody tr:visible');
-$('#nama').keyup(function() {
-    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-    
-    $rows.show().filter(function() {
-        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        return !~text.indexOf(val);
-    }).hide();
-});
+            <div class="panel-heading">
+            <h3 align="left">  Jarak negatif (D<sub>i</sub><sup>-</sup>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Alternatif</th>
+                    <th>Nama</th>
+                    <th>D<suo>-</sup></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i=0;
+                  $dmin=array();
+                  foreach($data as $nama=>$krit){
+                    echo "<tr>
+                      <td>".(++$i)."</td>
+                      <th>A{$i}</th>
+                      <td>{$nama}</td>";
+                    foreach($kriteria as $k){
+                      if(!isset($dmin[$i-1]))$dmin[$i-1]=0;
+                      $dmin[$i-1]+=pow($ymin[$k]-$y[$k][$i-1],2);
+                    }
+                    echo "<td>".round(sqrt($dmin[$i-1]),6)."</td>
+                     </tr>\n";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
 
-	 });
-</script>
+            <div class="panel-heading">
+            <h3 align="left">   Nilai Preferensi(V<sub>i</sub>) </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Alternatif</th>
+                    <th>Nama</th>
+                    <th>V<sub>i</sub></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i=0;
+                  $V=array();
+                  foreach($data as $nama=>$krit){
+                    echo "<tr>
+                      <td>".(++$i)."</td>
+                      <th>A{$i}</th>
+                      <td>{$nama}</td>";
+                    foreach($kriteria as $k){
+                      @$V[$i-1]=$dmin[$i-1]/($dmin[$i-1]+$dplus[$i-1]);
+                    }
+                    echo "<td>{$V[$i-1]}</td></tr>\n";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
